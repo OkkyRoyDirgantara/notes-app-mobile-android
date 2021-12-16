@@ -18,9 +18,12 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initWidgets();
-        loadFromDBToMemory();
         setNoteAdapter();
         setOnClickListener();
+        // load from db into memory if app not destroyed
+        if(savedInstanceState == null){
+            loadFromDBToMemory();
+        }
     }
 
 
@@ -44,16 +47,11 @@ public class MainActivity extends AppCompatActivity
 
     private void setOnClickListener()
     {
-        noteListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l)
-            {
-                Note selectedNote = (Note) noteListView.getItemAtPosition(position);
-                Intent editNoteIntent = new Intent(getApplicationContext(), NoteDetailActivity.class);
-                editNoteIntent.putExtra(Note.NOTE_EDIT_EXTRA, selectedNote.getId());
-                startActivity(editNoteIntent);
-            }
+        noteListView.setOnItemClickListener((adapterView, view, position, l) -> {
+            Note selectedNote = (Note) noteListView.getItemAtPosition(position);
+            Intent editNoteIntent = new Intent(getApplicationContext(), NoteDetailActivity.class);
+            editNoteIntent.putExtra(Note.NOTE_EDIT_EXTRA, selectedNote.getId());
+            startActivity(editNoteIntent);
         });
     }
 
