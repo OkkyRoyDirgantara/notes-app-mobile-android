@@ -20,10 +20,7 @@ public class MainActivity extends AppCompatActivity
         initWidgets();
         setNoteAdapter();
         setOnClickListener();
-        // load from db into memory if app not destroyed
-        if(savedInstanceState == null){
-            loadFromDBToMemory();
-        }
+        loadFromDBToMemory();
     }
 
 
